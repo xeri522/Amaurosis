@@ -1,8 +1,17 @@
 namespace SpriteKind {
     export const AIM = SpriteKind.create()
+    export const key = SpriteKind.create()
+}
+function spawnBoss () {
+    boss = sprites.create(assets.image`myImage1`, SpriteKind.Player)
+    animation.runImageAnimation(
+    boss,
+    assets.animation`myAnim`,
+    100,
+    true
+    )
 }
 function Shoot_Projectile2 () {
-    let boss: Sprite = null
     if (Math.percentChance(5)) {
         for (let index = 0; index < 5; index++) {
             BossProjectile = sprites.create(assets.image`Tracker Attack`, SpriteKind.Player)
@@ -31,6 +40,20 @@ function Shoot_Projectile2 () {
         }
     }
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    if (hasKey == true) {
+        tiles.setTileAt(tiles.getTileLocation(location.column, location.row), assets.tile`myTile1`)
+        sprites.destroy(key)
+        hasKey = false
+    } else {
+        tiles.placeOnRandomTile(movementHitbox, assets.tile`end2`)
+        tiles.placeOnRandomTile(charlook, assets.tile`end2`)
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.key, function (sprite, otherSprite) {
+    hasKey = true
+    otherSprite.follow(sprite)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     proj = darts.create(img`
         . . . . . . . . 
@@ -61,18 +84,30 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`end`, function (sprite, locat
     clear()
     currentLevel += 1
     next_level()
+    if (currentLevel == 4) {
+        key = sprites.create(assets.image`myImage`, SpriteKind.key)
+        tiles.placeOnRandomTile(key, assets.tile`bossSpawner`)
+    } else if (currentLevel == 8) {
+        key = sprites.create(assets.image`myImage`, SpriteKind.key)
+        tiles.placeOnRandomTile(key, assets.tile`bossSpawner`)
+    }
 })
 function degree_to_radian (deg: number) {
     return Math.PI / 180 * deg
 }
 sprites.onDestroyed(SpriteKind.Projectile, function (sprite) {
     Projectilesused += 1
+    info.setScore(Projectilesused)
 })
 let currentLevel = 0
 let degrees = 0
 let proj: Dart = null
+let key: Sprite = null
+let hasKey = false
 let BossProjectile: Sprite = null
+let boss: Sprite = null
 let levels: tiles.TileMapData[] = []
+let Projectilesused = 0
 let movementHitbox: Sprite = null
 let charlook: Sprite = null
 charlook = sprites.create(assets.image`char`, SpriteKind.Player)
@@ -88,9 +123,10 @@ movementHitbox = sprites.create(img`
     . . . . . . . . . . 
     . . . . . . . . . . 
     `, SpriteKind.Player)
+info.setScore(Projectilesused)
 charlook.setFlag(SpriteFlag.Ghost, true)
 scene.cameraFollowSprite(movementHitbox)
-scene.setBackgroundImage(assets.image`background2`)
+scene.setBackgroundImage(assets.image`background1`)
 levels = [
 tilemap`level1`,
 tilemap`level2`,
@@ -119,7 +155,7 @@ let aim = sprites.create(img`
     . . . 1 1 . . . 
     . . . . . . . . 
     `, SpriteKind.AIM)
-let Projectilesused = 0
+Projectilesused = 0
 aim.z = 1
 let playerHealth = statusbars.create(20, 4, StatusBarKind.Health)
 playerHealth.max = 50
