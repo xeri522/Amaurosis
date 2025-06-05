@@ -58,6 +58,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     proj.gravity = 0
     proj.throwDart()
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile4`, function (sprite, location) {
+    game.setGameOverMessage(true, "you escape.")
+})
 function next_level () {
     tiles.setCurrentTilemap(levels[currentLevel])
     tiles.placeOnRandomTile(movementHitbox, assets.tile`end2`)
