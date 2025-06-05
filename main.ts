@@ -60,8 +60,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function next_level () {
     tiles.setCurrentTilemap(levels[currentLevel])
-    tiles.placeOnRandomTile(movementHitbox, assets.tile`transparency16`)
-    tiles.placeOnRandomTile(charlook, assets.tile`transparency16`)
+    tiles.placeOnRandomTile(movementHitbox, assets.tile`end2`)
+    tiles.placeOnRandomTile(charlook, assets.tile`end2`)
 }
 function clear () {
     for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
@@ -73,11 +73,31 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`end`, function (sprite, locat
     currentLevel += 1
     next_level()
     if (currentLevel == 4) {
-        key = sprites.create(assets.image`myImage`, SpriteKind.key)
-        tiles.placeOnRandomTile(key, assets.tile`transparency16`)
+        key = sprites.create(img`
+            . . . . . . . . . 
+            . . . . . . . . . 
+            . . . . . . . . . 
+            . . 1 1 1 . . . . 
+            . . 1 . 1 1 1 . . 
+            . . 1 1 1 . 1 . . 
+            . . . . . . . . . 
+            . . . . . . . . . 
+            . . . . . . . . . 
+            `, SpriteKind.key)
+        tiles.placeOnRandomTile(key, assets.tile`myTile2`)
     } else if (currentLevel == 8) {
-        key = sprites.create(assets.image`myImage`, SpriteKind.key)
-        tiles.placeOnRandomTile(key, assets.tile`transparency16`)
+        key = sprites.create(img`
+            . . . . . . . . . 
+            . . . . . . . . . 
+            . . . . . . . . . 
+            . . 1 1 1 . . . . 
+            . . 1 . 1 1 1 . . 
+            . . 1 1 1 . 1 . . 
+            . . . . . . . . . 
+            . . . . . . . . . 
+            . . . . . . . . . 
+            `, SpriteKind.key)
+        tiles.placeOnRandomTile(key, assets.tile`myTile2`)
     }
 })
 function degree_to_radian (deg: number) {
