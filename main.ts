@@ -109,7 +109,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.key, function (sprite, otherSpri
     otherSprite.follow(sprite)
 })
 sprites.onDestroyed(SpriteKind.Projectile, function (sprite) {
-    Projectilesused += 1
     info.setScore(Projectilesused)
 })
 let degrees = 0
