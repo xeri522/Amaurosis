@@ -62,6 +62,7 @@ function next_level () {
     tiles.setCurrentTilemap(levels[currentLevel])
     tiles.placeOnRandomTile(movementHitbox, assets.tile`end2`)
     tiles.placeOnRandomTile(charlook, assets.tile`end2`)
+    info.changeScoreBy(1)
 }
 function clear () {
     for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
@@ -111,12 +112,12 @@ sprites.onDestroyed(SpriteKind.Projectile, function (sprite) {
     Projectilesused += 1
     info.setScore(Projectilesused)
 })
-let currentLevel = 0
 let degrees = 0
 let proj: Dart = null
 let key: Sprite = null
 let hasKey = false
 let BossProjectile: Sprite = null
+let currentLevel = 0
 let levels: tiles.TileMapData[] = []
 let Projectilesused = 0
 let movementHitbox: Sprite = null
@@ -140,17 +141,18 @@ charlook = sprites.create(img`
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
 movementHitbox = sprites.create(img`
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . 3 3 3 3 . . . 
-    . . . 3 3 3 3 . . . 
-    . . . 3 3 3 3 . . . 
-    . . . 3 3 3 3 . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
-    . . . . . . . . . . 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
     `, SpriteKind.Player)
+movementHitbox.setFlag(SpriteFlag.Invisible, true)
 info.setScore(Projectilesused)
 charlook.setFlag(SpriteFlag.Ghost, true)
 scene.cameraFollowSprite(movementHitbox)
@@ -278,15 +280,16 @@ scene.setBackgroundImage(img`
     `)
 levels = [
 tilemap`level0`,
-tilemap`level6`,
+tilemap`level7`,
 tilemap`level8`,
 tilemap`level10`,
-tilemap`level6`,
+tilemap`level22`,
 tilemap`level12`,
-tilemap`level8`,
+tilemap`level23`,
 tilemap`level14`,
 tilemap`level16`
 ]
+currentLevel = 0
 next_level()
 let switchlevel = true
 let radius = 20
