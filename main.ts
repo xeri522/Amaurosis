@@ -330,4 +330,28 @@ game.onUpdate(function () {
 })
 forever(function () {
     charlook.setPosition(movementHitbox.x, movementHitbox.y)
+    characterAnimations.runFrames(
+    charlook,
+    assets.animation`walkforward`,
+    500,
+    characterAnimations.rule(Predicate.MovingDown)
+    )
+    characterAnimations.runFrames(
+    charlook,
+    assets.animation`walkright`,
+    500,
+    characterAnimations.rule(Predicate.MovingRight)
+    )
+    characterAnimations.runFrames(
+    charlook,
+    assets.animation`walkLeft`,
+    500,
+    characterAnimations.rule(Predicate.MovingLeft)
+    )
+    characterAnimations.runFrames(
+    charlook,
+    assets.animation`walkup`,
+    500,
+    characterAnimations.rule(Predicate.MovingUp)
+    )
 })
